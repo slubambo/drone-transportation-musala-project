@@ -8,6 +8,8 @@ import java.util.HashSet;
 import java.util.Set;
 import org.hibernate.annotations.NaturalId;
 
+import com.drone.model.audit.DateAudit;
+
 @Entity
 @Table(
   name = "users",
