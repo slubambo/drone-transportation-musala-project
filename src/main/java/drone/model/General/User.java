@@ -1,4 +1,4 @@
-package com.drone.model.General;
+package drone.model.General;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 import org.hibernate.annotations.NaturalId;
 
-import com.drone.model.audit.DateAudit;
+import drone.model.audit.DateAudit;
 
 @Entity
 @Table(

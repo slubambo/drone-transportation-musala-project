@@ -1,9 +1,9 @@
-package com.drone.model.General;
+package drone.model.General;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.NaturalId;
 
-import com.drone.enums.RoleName;
+import drone.enums.RoleName;
 
 @Entity
 @Table(name = "roles")

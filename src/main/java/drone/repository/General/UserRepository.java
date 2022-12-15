@@ -1,6 +1,6 @@
-package com.drone.repository.General;
+package drone.repository.General;
 
-import com.drone.model.General.User;
+import drone.model.General.User;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;

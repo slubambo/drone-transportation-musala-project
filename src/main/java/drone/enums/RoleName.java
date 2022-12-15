@@ -1,4 +1,4 @@
-package com.drone.enums;
+package drone.enums;
 
 public enum RoleName {
   ROLE_USER,

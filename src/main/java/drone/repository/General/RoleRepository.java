@@ -1,7 +1,7 @@
-package com.drone.repository.General;
+package drone.repository.General;
 
-import com.drone.enums.RoleName;
-import com.drone.model.General.Role;
+import drone.enums.RoleName;
+import drone.model.General.Role;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

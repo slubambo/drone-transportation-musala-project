@@ -1,4 +1,4 @@
-package com.drone.model.audit;
+package drone.model.audit;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
