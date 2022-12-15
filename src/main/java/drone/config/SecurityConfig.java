@@ -17,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -69,30 +70,15 @@ public class SecurityConfig {
       .sessionManagement()
       .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
       .and()
-      .authorizeHttpRequests()
-      .antMatchers(
-        "/",
-        "/favicon.ico",
-        "/**/*.png",
-        "/**/*.gif",
-        "/**/*.svg",
-        "/**/*.jpg",
-        "/**/*.html",
-        "/**/*.css",
-        "/**/*.js"
-      )
-      .permitAll()
-      .antMatchers("/api/auth/**")
-      .permitAll()
-      .antMatchers(
-        "/api/user/checkUsernameAvailability",
-        "/api/user/checkEmailAvailability"
-      )
-      .permitAll()
-      .antMatchers(HttpMethod.GET, "/api/users/**")
-      .permitAll()
-      .anyRequest()
-      .authenticated();
+      .authorizeHttpRequests(requests ->
+        requests
+          .requestMatchers(new AntPathRequestMatcher("/"))
+          .permitAll()
+          .requestMatchers(new AntPathRequestMatcher("/api/auth/**"))
+          .permitAll()
+          .anyRequest()
+          .authenticated()
+      );
 
     // Add our custom JWT security filter
     http.addFilterBefore(
