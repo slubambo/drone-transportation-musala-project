@@ -22,35 +22,33 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/dispatch")
 public class DispatchController {
 
-  @Autowired
-  private DispatchService dispatchService;
+	@Autowired
+	private DispatchService dispatchService;
 
-  /*
-   *
-   * Enum Value end points
-   */
+	/*
+	 *
+	 * Enum Value end points
+	 */
 
-  @GetMapping("/get-drone-models")
-  public List<DroneModel> getDroneModels() {
-    return Arrays.asList(DroneModel.values());
-  }
+	@GetMapping("/get-drone-models")
+	public List<DroneModel> getDroneModels() {
+		return Arrays.asList(DroneModel.values());
+	}
 
-  @GetMapping("/get-drone-states")
-  public List<DroneState> getDroneStates() {
-    return Arrays.asList(DroneState.values());
-  }
+	@GetMapping("/get-drone-states")
+	public List<DroneState> getDroneStates() {
+		return Arrays.asList(DroneState.values());
+	}
 
-  /*
-   *
-   * Drones Management
-   */
+	/*
+	 *
+	 * Drones Management
+	 */
 
-  /* Registering a drone */
-  @PostMapping("/register-drone")
-  public ResponseEntity<ApiResponse> registerDrone(
-    @CurrentUser UserPrincipal currentUser,
-    @Valid @RequestBody DroneRequestPayload payLoad
-  ) {
-    return dispatchService.registerDrone(payLoad);
-  }
+	/* Registering a drone */
+	@PostMapping("/register-drone")
+	public ResponseEntity<ApiResponse> registerDrone(@CurrentUser UserPrincipal currentUser,
+			@Valid @RequestBody DroneRequestPayload payLoad) {
+		return dispatchService.registerDrone(payLoad);
+	}
 }
