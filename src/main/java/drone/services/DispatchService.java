@@ -7,6 +7,7 @@ import drone.model.businessModels.DroneMedicationDelivery;
 import drone.model.businessModels.Medication;
 import drone.payloads.ApiResponse;
 import drone.payloads.dispatch.DispatchRequestPayload;
+import drone.payloads.dispatch.DroneMedicationLoadResponse;
 import drone.payloads.drones.BattteryStatusResponse;
 import drone.payloads.drones.DroneRequestPayload;
 import drone.payloads.drones.DroneResponsePayload;
@@ -228,6 +229,38 @@ public class DispatchService {
 					HttpStatus.EXPECTATION_FAILED);
 		}
 
+	}
+
+	// checking loaded medication items for a given drone
+	public DroneMedicationLoadResponse checkDroneMedicationLoad(DroneResponsePayload payLoad) {
+
+		Optional<Drone> drone = payLoad.getId() != null ? droneRepository.findById(payLoad.getId()) : Optional.empty();
+
+		DroneMedicationLoadResponse response = new DroneMedicationLoadResponse();
+
+		if (drone.isPresent()) {
+
+			response.setDroneId(drone.get().getId());
+			response.setSerialNumber(drone.get().getSerialNumber());
+			response.setState(drone.get().getState());
+
+			ArrayList<MedicationResponsePayload> loadedMedications = (ArrayList<MedicationResponsePayload>) drone.get()
+					.getDroneDeliveries().stream().filter(d -> d.getLoadStatus() != LoadStatus.DELIVERED)
+					.map(m -> new MedicationResponsePayload(m.getMedication().getId(), m.getMedication().getName(),
+							m.getMedication().getWeight(), m.getMedication().getCode(),
+							m.getMedication().getImagePath()))
+					.collect(Collectors.toList());
+
+			response.setLoadedMedications(loadedMedications);
+
+			response.setMessage(loadedMedications.size() > 0 ? loadedMedications.size() + " Medications Loaded"
+					: "No Medications currently loaded");
+
+		} else {
+			response.setMessage("Drone selected was not found");
+		}
+
+		return response;
 	}
 
 }

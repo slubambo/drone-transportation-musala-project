@@ -4,6 +4,7 @@ import drone.enums.DroneModel;
 import drone.enums.DroneState;
 import drone.payloads.ApiResponse;
 import drone.payloads.dispatch.DispatchRequestPayload;
+import drone.payloads.dispatch.DroneMedicationLoadResponse;
 import drone.payloads.drones.BattteryStatusResponse;
 import drone.payloads.drones.DroneRequestPayload;
 import drone.payloads.drones.DroneResponsePayload;
@@ -98,5 +99,11 @@ public class DispatchController {
 	public ResponseEntity<ApiResponse> loadDrone(@CurrentUser UserPrincipal currentUser,
 			@Valid @RequestBody DispatchRequestPayload payLoad) {
 		return dispatchService.loadDrone(payLoad);
+	}
+
+	// checking loaded medication items for a given drone
+	@GetMapping("/check-drone-medication-load")
+	public DroneMedicationLoadResponse checkDroneMedicationLoad(@RequestBody DroneResponsePayload payLoad) {
+		return dispatchService.checkDroneMedicationLoad(payLoad);
 	}
 }
