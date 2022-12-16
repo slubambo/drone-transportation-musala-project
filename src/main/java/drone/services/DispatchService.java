@@ -3,7 +3,9 @@ package drone.services;
 import drone.enums.DroneState;
 import drone.model.businessModels.Drone;
 import drone.payloads.ApiResponse;
+import drone.payloads.drones.BattteryStatusResponse;
 import drone.payloads.drones.DroneRequestPayload;
+import drone.payloads.drones.DroneResponsePayload;
 import drone.repository.BusinessRepository.DroneRepository;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,5 +57,24 @@ public class DispatchService {
 
 		return new ResponseEntity<>(new ApiResponse(false, "Drone not Registered, Try Again"),
 				HttpStatus.EXPECTATION_FAILED);
+	}
+
+	/* Get Drone Battery Status */
+	public BattteryStatusResponse getDroneBatteryPercentage(DroneResponsePayload payLoad) {
+
+		Optional<Drone> drone = payLoad.getId() != null ? droneRepository.findById(payLoad.getId()) : Optional.empty();
+
+		if (drone.isPresent()) {
+
+			return drone.get().getBatteryCapacity() != null
+					? new BattteryStatusResponse(drone.get().getBatteryCapacity(),
+							"Battery status returned successfully")
+					: new BattteryStatusResponse(null, "Drone with Serial Number " + drone.get().getSerialNumber()
+							+ " has no battery status saved");
+
+		} else {
+			return new BattteryStatusResponse(null, "Drone selected not found, try again");
+		}
+
 	}
 }

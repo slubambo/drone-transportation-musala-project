@@ -3,7 +3,9 @@ package drone.controller;
 import drone.enums.DroneModel;
 import drone.enums.DroneState;
 import drone.payloads.ApiResponse;
+import drone.payloads.drones.BattteryStatusResponse;
 import drone.payloads.drones.DroneRequestPayload;
+import drone.payloads.drones.DroneResponsePayload;
 import drone.security.CurrentUser;
 import drone.security.UserPrincipal;
 import drone.services.DispatchService;
@@ -50,5 +52,12 @@ public class DispatchController {
 	public ResponseEntity<ApiResponse> registerDrone(@CurrentUser UserPrincipal currentUser,
 			@Valid @RequestBody DroneRequestPayload payLoad) {
 		return dispatchService.registerDrone(payLoad);
+	}
+
+	/* Get Drone Battery Status */
+	@GetMapping("/get-drone-battery-perecentage")
+	public BattteryStatusResponse getDroneBatteryPercentage(@CurrentUser UserPrincipal currentUser,
+			@RequestBody DroneResponsePayload payLoad) {
+		return dispatchService.getDroneBatteryPercentage(payLoad);
 	}
 }
