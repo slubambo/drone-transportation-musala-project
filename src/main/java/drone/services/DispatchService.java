@@ -186,6 +186,26 @@ public class DispatchService {
 
 		if (medication.isPresent() && drone.isPresent() && payLoad.getCount() != null) {
 
+			// Verify Weight
+			if ((payLoad.getCount() * medication.get().getWeight()) > drone.get().getWeightLimit()) {
+
+				return new ResponseEntity<>(new ApiResponse(false, "Loading weight is above drone capacity"),
+						HttpStatus.EXPECTATION_FAILED);
+
+			}
+
+			// verify Batter Status
+			if (payLoad.getLoadStatus() == null || payLoad.getLoadStatus() == LoadStatus.LOADING) {
+
+				if (drone.get().getBatteryCapacity() < 25) {
+
+					return new ResponseEntity<>(
+							new ApiResponse(false, "Drone's battery level is below 25, charge first"),
+							HttpStatus.EXPECTATION_FAILED);
+
+				}
+			}
+
 			DroneMedicationDelivery droneMedicationDelivery = delivery.isPresent() ? delivery.get()
 					: new DroneMedicationDelivery();
 
