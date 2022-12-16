@@ -3,6 +3,7 @@ package drone.controller;
 import drone.enums.DroneModel;
 import drone.enums.DroneState;
 import drone.payloads.ApiResponse;
+import drone.payloads.dispatch.DispatchRequestPayload;
 import drone.payloads.drones.BattteryStatusResponse;
 import drone.payloads.drones.DroneRequestPayload;
 import drone.payloads.drones.DroneResponsePayload;
@@ -93,4 +94,9 @@ public class DispatchController {
 	 */
 
 	// loading a drone with medication items
+	@PostMapping("/load-drone-with-medication")
+	public ResponseEntity<ApiResponse> loadDrone(@CurrentUser UserPrincipal currentUser,
+			@Valid @RequestBody DispatchRequestPayload payLoad) {
+		return dispatchService.loadDrone(payLoad);
+	}
 }

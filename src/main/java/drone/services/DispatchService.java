@@ -1,14 +1,18 @@
 package drone.services;
 
 import drone.enums.DroneState;
+import drone.enums.LoadStatus;
 import drone.model.businessModels.Drone;
+import drone.model.businessModels.DroneMedicationDelivery;
 import drone.model.businessModels.Medication;
 import drone.payloads.ApiResponse;
+import drone.payloads.dispatch.DispatchRequestPayload;
 import drone.payloads.drones.BattteryStatusResponse;
 import drone.payloads.drones.DroneRequestPayload;
 import drone.payloads.drones.DroneResponsePayload;
 import drone.payloads.medications.MedicationRequestPayload;
 import drone.payloads.medications.MedicationResponsePayload;
+import drone.repository.BusinessRepositories.DroneMedicationDeliveryRepository;
 import drone.repository.BusinessRepositories.DroneRepository;
 import drone.repository.BusinessRepositories.MedicationRepository;
 
@@ -33,6 +37,9 @@ public class DispatchService {
 
 	@Autowired
 	private MedicationRepository medicationRepository;
+
+	@Autowired
+	private DroneMedicationDeliveryRepository droneMedicationDeliveryRepository;
 
 	/*
 	 *
@@ -162,5 +169,45 @@ public class DispatchService {
 	 *
 	 * Dispatching Medications
 	 */
+
+	// loading a drone with medication items
+	public ResponseEntity<ApiResponse> loadDrone(DispatchRequestPayload payLoad) {
+
+		Optional<DroneMedicationDelivery> delivery = payLoad.getId() != null
+				? droneMedicationDeliveryRepository.findById(payLoad.getId())
+				: Optional.empty();
+
+		Optional<Medication> medication = payLoad.getMedicationId() != null
+				? medicationRepository.findById(payLoad.getMedicationId())
+				: Optional.empty();
+
+		Optional<Drone> drone = payLoad.getDroneId() != null ? droneRepository.findById(payLoad.getDroneId())
+				: Optional.empty();
+
+		if (medication.isPresent() && drone.isPresent() && payLoad.getCount() != null) {
+
+			DroneMedicationDelivery droneMedicationDelivery = delivery.isPresent() ? delivery.get()
+					: new DroneMedicationDelivery();
+
+			droneMedicationDelivery.setMedication(medication.get());
+			droneMedicationDelivery.setDrone(drone.get());
+			droneMedicationDelivery.setCount(payLoad.getCount());
+			droneMedicationDelivery
+					.setLoadStatus(payLoad.getLoadStatus() != null ? payLoad.getLoadStatus() : LoadStatus.LOADING);
+
+			if (droneMedicationDeliveryRepository.save(droneMedicationDelivery) != null) {
+
+				return new ResponseEntity<>(new ApiResponse(true, "Loading Successful"), HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>(new ApiResponse(false, "Loading not Successful"), HttpStatus.OK);
+			}
+
+		} else {
+			return new ResponseEntity<>(
+					new ApiResponse(false, "Loading not Successful, Medication or Drone not selected"),
+					HttpStatus.EXPECTATION_FAILED);
+		}
+
+	}
 
 }

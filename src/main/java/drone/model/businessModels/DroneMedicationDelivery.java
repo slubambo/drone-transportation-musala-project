@@ -1,5 +1,7 @@
 package drone.model.businessModels;
 
+import java.util.Date;
+
 import drone.enums.LoadStatus;
 import drone.model.audit.UserDateAudit;
 import jakarta.persistence.Entity;
@@ -27,9 +29,11 @@ public class DroneMedicationDelivery extends UserDateAudit {
 	@JoinColumn(name = "medication_id", nullable = false)
 	private Medication medication;
 
-	private Long loadedWeight;
+	private Long count;
 
 	private LoadStatus loadStatus;
+
+	private Date deliveryDateTime;
 
 	public DroneMedicationDelivery() {
 		super();
@@ -59,12 +63,12 @@ public class DroneMedicationDelivery extends UserDateAudit {
 		this.medication = medication;
 	}
 
-	public Long getLoadedWeight() {
-		return loadedWeight;
+	public Long getCount() {
+		return count;
 	}
 
-	public void setLoadedWeight(Long loadedWeight) {
-		this.loadedWeight = loadedWeight;
+	public void setCount(Long count) {
+		this.count = count;
 	}
 
 	public LoadStatus getLoadStatus() {
@@ -73,6 +77,14 @@ public class DroneMedicationDelivery extends UserDateAudit {
 
 	public void setLoadStatus(LoadStatus loadStatus) {
 		this.loadStatus = loadStatus;
+	}
+
+	public Date getDeliveryDateTime() {
+		return deliveryDateTime;
+	}
+
+	public void setDeliveryDateTime(Date deliveryDateTime) {
+		this.deliveryDateTime = deliveryDateTime;
 	}
 
 }
