@@ -10,7 +10,7 @@ import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(
-  name = "users",
+  name = "drones",
   uniqueConstraints = { @UniqueConstraint(columnNames = { "serialNumber" }) }
 )
 public class Drone extends UserDateAudit {

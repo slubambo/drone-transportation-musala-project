@@ -33,6 +33,14 @@ public class DispatchService {
 		if (payLoad.getSerialNumber() != null && payLoad.getModel() != null) {
 			Drone transportationDrone = drone.isPresent() ? drone.get() : new Drone();
 
+			// Check if Drone name already exists
+			Optional<Drone> existingDrone = droneRepository.findBySerialNumber(payLoad.getSerialNumber());
+
+			if (existingDrone.isPresent() && !drone.isPresent()) {
+				return new ResponseEntity<>(new ApiResponse(false, "Drone already exists with the same Serial Number"),
+						HttpStatus.EXPECTATION_FAILED);
+			}
+
 			transportationDrone.setSerialNumber(payLoad.getSerialNumber());
 			transportationDrone.setModel(payLoad.getModel());
 			transportationDrone.setWeightLimit(payLoad.getWeightLimit() != null ? payLoad.getWeightLimit() : 500);
@@ -41,10 +49,11 @@ public class DispatchService {
 			transportationDrone.setState(payLoad.getState() != null ? payLoad.getState() : DroneState.IDLE);
 
 			if (droneRepository.save(transportationDrone) != null) {
-				return new ResponseEntity<>(new ApiResponse(false, "Drone not Registered, Try Again"), HttpStatus.OK);
+				return new ResponseEntity<>(new ApiResponse(true, "Drone registered successfully"), HttpStatus.OK);
 			}
 		}
 
-		return new ResponseEntity<>(new ApiResponse(false, "Drone not Registered, Try Again"), HttpStatus.OK);
+		return new ResponseEntity<>(new ApiResponse(false, "Drone not Registered, Try Again"),
+				HttpStatus.EXPECTATION_FAILED);
 	}
 }
