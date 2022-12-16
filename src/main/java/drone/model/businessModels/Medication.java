@@ -25,10 +25,6 @@ public class Medication extends UserDateAudit {
 	@Pattern(regexp = "^[A-Za-z0-9]+$") // (allowed only upper case letters, underscore and numbers)
 	private String code;
 
-	@Lob
-	@Column(length = 2000)
-	private byte[] image;
-
 	private String imagePath;
 
 	@OneToMany(mappedBy = "medication", fetch = FetchType.LAZY)
@@ -67,14 +63,6 @@ public class Medication extends UserDateAudit {
 
 	public void setCode(String code) {
 		this.code = code;
-	}
-
-	public byte[] getImage() {
-		return image;
-	}
-
-	public void setImage(byte[] image) {
-		this.image = image;
 	}
 
 	public Set<DroneMedicationDelivery> getMedicationDeliveries() {

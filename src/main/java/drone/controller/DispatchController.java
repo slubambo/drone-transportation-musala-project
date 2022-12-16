@@ -6,6 +6,7 @@ import drone.payloads.ApiResponse;
 import drone.payloads.drones.BattteryStatusResponse;
 import drone.payloads.drones.DroneRequestPayload;
 import drone.payloads.drones.DroneResponsePayload;
+import drone.payloads.medications.MedicationRequestPayload;
 import drone.payloads.medications.MedicationResponsePayload;
 import drone.security.CurrentUser;
 import drone.security.UserPrincipal;
@@ -48,7 +49,7 @@ public class DispatchController {
 	 * Drones Management
 	 */
 
-	/* Registering a drone */
+	// Registering a drone
 	@PostMapping("/register-drone")
 	public ResponseEntity<ApiResponse> registerDrone(@CurrentUser UserPrincipal currentUser,
 			@Valid @RequestBody DroneRequestPayload payLoad) {
@@ -73,9 +74,23 @@ public class DispatchController {
 	 * Dispatching Medications
 	 */
 
-	/* get medications for loading */
+	// get medications for loading
 	@GetMapping("/get-medications")
 	public List<MedicationResponsePayload> getMedications() {
 		return dispatchService.getMedications();
 	}
+
+	/* Registering a Medication */
+	@PostMapping("/register-medication")
+	public ResponseEntity<ApiResponse> registerMedication(@CurrentUser UserPrincipal currentUser,
+			@Valid @RequestBody MedicationRequestPayload payLoad) {
+		return dispatchService.registerMedication(payLoad);
+	}
+
+	/*
+	 *
+	 * Dispatching Medications
+	 */
+
+	// loading a drone with medication items
 }

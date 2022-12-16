@@ -7,6 +7,7 @@ import drone.payloads.ApiResponse;
 import drone.payloads.drones.BattteryStatusResponse;
 import drone.payloads.drones.DroneRequestPayload;
 import drone.payloads.drones.DroneResponsePayload;
+import drone.payloads.medications.MedicationRequestPayload;
 import drone.payloads.medications.MedicationResponsePayload;
 import drone.repository.BusinessRepositories.DroneRepository;
 import drone.repository.BusinessRepositories.MedicationRepository;
@@ -106,8 +107,9 @@ public class DispatchService {
 
 	/*
 	 *
-	 * Dispatching Medications
+	 * Managing Medications
 	 */
+
 	/* checking available drones for loading */
 	public List<MedicationResponsePayload> getMedications() {
 
@@ -122,4 +124,43 @@ public class DispatchService {
 		return medications;
 
 	}
+
+	/* Registering a Medication */
+	public ResponseEntity<ApiResponse> registerMedication(MedicationRequestPayload payLoad) {
+
+		Optional<Medication> medication = payLoad.getId() != null ? medicationRepository.findById(payLoad.getId())
+				: Optional.empty();
+
+		// pay-load checks
+		if (payLoad.getName() != null && payLoad.getWeight() != null && payLoad.getCode() != null) {
+
+			Medication medicine = medication.isPresent() ? medication.get() : new Medication();
+
+			// Check if medication name already exists
+			Optional<Medication> existingMedication = medicationRepository.findByName(payLoad.getName());
+
+			if (existingMedication.isPresent() && !medication.isPresent()) {
+				return new ResponseEntity<>(new ApiResponse(false, "Medication already exists with the Name"),
+						HttpStatus.EXPECTATION_FAILED);
+			}
+
+			medicine.setName(payLoad.getName());
+			medicine.setWeight(payLoad.getWeight());
+			medicine.setCode(payLoad.getCode());
+			medicine.setImagePath(payLoad.getImagePath());
+
+			if (medicationRepository.save(medicine) != null) {
+				return new ResponseEntity<>(new ApiResponse(true, "Medication registered successfully"), HttpStatus.OK);
+			}
+		}
+
+		return new ResponseEntity<>(new ApiResponse(false, "Medication not Registered, Try Again"),
+				HttpStatus.EXPECTATION_FAILED);
+	}
+
+	/*
+	 *
+	 * Dispatching Medications
+	 */
+
 }
