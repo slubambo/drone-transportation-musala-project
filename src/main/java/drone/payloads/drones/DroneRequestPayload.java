@@ -1,22 +1,13 @@
-package drone.model.businessModels;
+package drone.payloads.drones;
 
 import drone.enums.DroneModel;
 import drone.enums.DroneState;
-import drone.model.audit.UserDateAudit;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-@Entity
-@Table(
-  name = "users",
-  uniqueConstraints = { @UniqueConstraint(columnNames = { "serialNumber" }) }
-)
-public class Drone extends UserDateAudit {
+public class DroneRequestPayload {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @NotBlank
@@ -25,7 +16,7 @@ public class Drone extends UserDateAudit {
 
   private DroneModel model;
 
-  @Max(value = 500) //Quotion on max 500gr
+  @Max(value = 500)
   private Integer weightLimit;
 
   @Max(value = 100)
@@ -33,9 +24,9 @@ public class Drone extends UserDateAudit {
 
   private DroneState state;
 
-  public Drone() {}
+  public DroneRequestPayload() {}
 
-  public Drone(
+  public DroneRequestPayload(
     @NotBlank @Size(max = 100) String serialNumber,
     DroneModel model,
     @Max(500) Integer weightLimit,
