@@ -13,9 +13,9 @@ import drone.payloads.drones.DroneRequestPayload;
 import drone.payloads.drones.DroneResponsePayload;
 import drone.payloads.medications.MedicationRequestPayload;
 import drone.payloads.medications.MedicationResponsePayload;
-import drone.repository.BusinessRepositories.DroneMedicationDeliveryRepository;
-import drone.repository.BusinessRepositories.DroneRepository;
-import drone.repository.BusinessRepositories.MedicationRepository;
+import drone.repository.businessRepositories.DroneMedicationDeliveryRepository;
+import drone.repository.businessRepositories.DroneRepository;
+import drone.repository.businessRepositories.MedicationRepository;
 
 import java.util.ArrayList;
 import java.util.List;

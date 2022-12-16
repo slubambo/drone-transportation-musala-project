@@ -1,4 +1,4 @@
-package drone.repository.BusinessRepositories;
+package drone.repository.businessRepositories;
 
 import java.util.Optional;
 

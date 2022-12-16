@@ -1,4 +1,4 @@
-package drone.model.General;
+package drone.model.general;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.NaturalId;
