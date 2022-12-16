@@ -33,7 +33,7 @@ public class Drone extends UserDateAudit {
 	private DroneState state;
 
 	@OneToMany(mappedBy = "drone", fetch = FetchType.LAZY)
-	private Set<DroneMedicationLoad> droneDeliveries;
+	private Set<DroneMedicationDelivery> droneDeliveries;
 
 	public Drone() {
 	}
@@ -95,11 +95,11 @@ public class Drone extends UserDateAudit {
 		this.state = state;
 	}
 
-	public Set<DroneMedicationLoad> getDroneDeliveries() {
+	public Set<DroneMedicationDelivery> getDroneDeliveries() {
 		return droneDeliveries;
 	}
 
-	public void setDroneDeliveries(Set<DroneMedicationLoad> droneDeliveries) {
+	public void setDroneDeliveries(Set<DroneMedicationDelivery> droneDeliveries) {
 		this.droneDeliveries = droneDeliveries;
 	}
 	

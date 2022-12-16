@@ -10,11 +10,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "drone_medication_loading")
-public class DroneMedicationLoad extends UserDateAudit {
+@Table(name = "drone_medication_deliveries")
+public class DroneMedicationDelivery extends UserDateAudit {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +31,7 @@ public class DroneMedicationLoad extends UserDateAudit {
 
 	private LoadStatus loadStatus;
 
-	public DroneMedicationLoad() {
+	public DroneMedicationDelivery() {
 		super();
 	}
 

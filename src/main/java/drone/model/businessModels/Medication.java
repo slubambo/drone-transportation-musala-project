@@ -30,7 +30,7 @@ public class Medication extends UserDateAudit {
 	private byte[] image;
 
 	@OneToMany(mappedBy = "medication", fetch = FetchType.LAZY)
-	private Set<DroneMedicationLoad> medicationDeliveries;
+	private Set<DroneMedicationDelivery> medicationDeliveries;
 
 	public Medication() {
 	}
@@ -83,11 +83,11 @@ public class Medication extends UserDateAudit {
 		this.image = image;
 	}
 
-	public Set<DroneMedicationLoad> getMedicationDeliveries() {
+	public Set<DroneMedicationDelivery> getMedicationDeliveries() {
 		return medicationDeliveries;
 	}
 
-	public void setMedicationDeliveries(Set<DroneMedicationLoad> medicationDeliveries) {
+	public void setMedicationDeliveries(Set<DroneMedicationDelivery> medicationDeliveries) {
 		this.medicationDeliveries = medicationDeliveries;
 	}
 	

@@ -6,8 +6,13 @@ import drone.payloads.ApiResponse;
 import drone.payloads.drones.BattteryStatusResponse;
 import drone.payloads.drones.DroneRequestPayload;
 import drone.payloads.drones.DroneResponsePayload;
-import drone.repository.BusinessRepository.DroneRepository;
+import drone.repository.BusinessRepositories.DroneRepository;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -75,6 +80,21 @@ public class DispatchService {
 		} else {
 			return new BattteryStatusResponse(null, "Drone selected not found, try again");
 		}
+
+	}
+
+	/* checking available drones for loading */
+	public List<DroneResponsePayload> getAvailableDrones() {
+
+		List<DroneResponsePayload> availableDrones = new ArrayList<>();
+
+		List<Drone> drones = droneRepository.findByState(DroneState.IDLE);
+
+		// transform to drone response pay-load list
+		availableDrones = drones.stream().map(d -> new DroneResponsePayload(d.getId(), d.getSerialNumber(),
+				d.getModel(), d.getWeightLimit(), d.getBatteryCapacity(), d.getState())).collect(Collectors.toList());
+
+		return availableDrones;
 
 	}
 }

@@ -1,4 +1,4 @@
-package drone.repository.BusinessRepository;
+package drone.repository.BusinessRepositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

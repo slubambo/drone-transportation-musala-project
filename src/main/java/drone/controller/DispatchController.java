@@ -60,4 +60,10 @@ public class DispatchController {
 			@RequestBody DroneResponsePayload payLoad) {
 		return dispatchService.getDroneBatteryPercentage(payLoad);
 	}
+
+	/* checking available drones for loading */
+	@GetMapping("/get-available-drones")
+	public List<DroneResponsePayload> getAvailableDrones() {
+		return dispatchService.getAvailableDrones();
+	}
 }
