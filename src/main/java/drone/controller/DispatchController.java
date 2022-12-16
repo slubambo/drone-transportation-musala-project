@@ -6,6 +6,7 @@ import drone.payloads.ApiResponse;
 import drone.payloads.dispatch.DispatchRequestPayload;
 import drone.payloads.dispatch.DroneMedicationLoadResponse;
 import drone.payloads.drones.BattteryStatusResponse;
+import drone.payloads.drones.DroneBatteryLevelAuditResponsePayload;
 import drone.payloads.drones.DroneRequestPayload;
 import drone.payloads.drones.DroneResponsePayload;
 import drone.payloads.medications.MedicationRequestPayload;
@@ -71,6 +72,12 @@ public class DispatchController {
 		return dispatchService.getAvailableDrones();
 	}
 
+	/* checking drone battery level audit trail */
+	@GetMapping("/get-drone-levels_trail")
+	public List<DroneBatteryLevelAuditResponsePayload> getDroneLevelsTrail(@RequestBody DroneResponsePayload payLoad) {
+		return dispatchService.getDroneLevelsTrail(payLoad);
+	}
+
 	/*
 	 *
 	 * Dispatching Medications
@@ -106,4 +113,5 @@ public class DispatchController {
 	public DroneMedicationLoadResponse checkDroneMedicationLoad(@RequestBody DroneResponsePayload payLoad) {
 		return dispatchService.checkDroneMedicationLoad(payLoad);
 	}
+
 }

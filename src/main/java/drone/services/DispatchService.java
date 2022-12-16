@@ -9,6 +9,7 @@ import drone.payloads.ApiResponse;
 import drone.payloads.dispatch.DispatchRequestPayload;
 import drone.payloads.dispatch.DroneMedicationLoadResponse;
 import drone.payloads.drones.BattteryStatusResponse;
+import drone.payloads.drones.DroneBatteryLevelAuditResponsePayload;
 import drone.payloads.drones.DroneRequestPayload;
 import drone.payloads.drones.DroneResponsePayload;
 import drone.payloads.medications.MedicationRequestPayload;
@@ -18,6 +19,7 @@ import drone.repository.businessRepositories.DroneRepository;
 import drone.repository.businessRepositories.MedicationRepository;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -30,8 +32,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class DispatchService {
 
-//	@Autowired
-//	private GeneralService generalService;
+	@Autowired
+	private GeneralService generalService;
 
 	@Autowired
 	private DroneRepository droneRepository;
@@ -110,6 +112,26 @@ public class DispatchService {
 				d.getModel(), d.getWeightLimit(), d.getBatteryCapacity(), d.getState())).collect(Collectors.toList());
 
 		return availableDrones;
+
+	}
+
+	/* checking drone battery level audit trail */
+	public List<DroneBatteryLevelAuditResponsePayload> getDroneLevelsTrail(DroneResponsePayload payLoad) {
+
+		Optional<Drone> drone = payLoad.getId() != null ? droneRepository.findById(payLoad.getId()) : Optional.empty();
+
+		List<DroneBatteryLevelAuditResponsePayload> batteryLevels = new ArrayList<>();
+
+		if (drone.isPresent()) {
+
+			batteryLevels = drone.get().getBatteryLevelAudits().stream()
+					.map(d -> new DroneBatteryLevelAuditResponsePayload(d.getId(), d.getDrone().getSerialNumber(),
+							d.getDrone().getBatteryCapacity(),
+							generalService.getDateTimeStampShortMonth(Date.from(d.getCreatedAt()))))
+					.collect(Collectors.toList());
+		}
+
+		return batteryLevels;
 
 	}
 

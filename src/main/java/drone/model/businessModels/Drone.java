@@ -4,6 +4,7 @@ import java.util.Set;
 
 import drone.enums.DroneModel;
 import drone.enums.DroneState;
+import drone.model.audit.DroneBatteryLevelAudit;
 import drone.model.audit.UserDateAudit;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
@@ -34,6 +35,9 @@ public class Drone extends UserDateAudit {
 
 	@OneToMany(mappedBy = "drone", fetch = FetchType.LAZY)
 	private Set<DroneMedicationDelivery> droneDeliveries;
+
+	@OneToMany(mappedBy = "drone", fetch = FetchType.LAZY)
+	private Set<DroneBatteryLevelAudit> batteryLevelAudits;
 
 	public Drone() {
 	}
@@ -102,5 +106,13 @@ public class Drone extends UserDateAudit {
 	public void setDroneDeliveries(Set<DroneMedicationDelivery> droneDeliveries) {
 		this.droneDeliveries = droneDeliveries;
 	}
-	
+
+	public Set<DroneBatteryLevelAudit> getBatteryLevelAudits() {
+		return batteryLevelAudits;
+	}
+
+	public void setBatteryLevelAudits(Set<DroneBatteryLevelAudit> batteryLevelAudits) {
+		this.batteryLevelAudits = batteryLevelAudits;
+	}
+
 }
