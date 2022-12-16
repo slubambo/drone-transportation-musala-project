@@ -1,5 +1,7 @@
 package drone.model.businessModels;
 
+import java.util.Set;
+
 import drone.model.audit.UserDateAudit;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -26,6 +28,9 @@ public class Medication extends UserDateAudit {
 	@Lob
 	@Column(length = 2000)
 	private byte[] image;
+
+	@OneToMany(mappedBy = "medication", fetch = FetchType.LAZY)
+	private Set<DroneMedicationLoad> medicationDeliveries;
 
 	public Medication() {
 	}
@@ -77,4 +82,13 @@ public class Medication extends UserDateAudit {
 	public void setImage(byte[] image) {
 		this.image = image;
 	}
+
+	public Set<DroneMedicationLoad> getMedicationDeliveries() {
+		return medicationDeliveries;
+	}
+
+	public void setMedicationDeliveries(Set<DroneMedicationLoad> medicationDeliveries) {
+		this.medicationDeliveries = medicationDeliveries;
+	}
+	
 }

@@ -54,7 +54,7 @@ public class DispatchController {
 		return dispatchService.registerDrone(payLoad);
 	}
 
-	/* Get Drone Battery Status */
+	/* check drone battery level for a given drone */
 	@GetMapping("/get-drone-battery-perecentage")
 	public BattteryStatusResponse getDroneBatteryPercentage(@CurrentUser UserPrincipal currentUser,
 			@RequestBody DroneResponsePayload payLoad) {

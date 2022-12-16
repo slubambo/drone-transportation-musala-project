@@ -1,5 +1,7 @@
 package drone.model.businessModels;
 
+import java.util.Set;
+
 import drone.enums.DroneModel;
 import drone.enums.DroneState;
 import drone.model.audit.UserDateAudit;
@@ -9,91 +11,96 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 @Entity
-@Table(
-  name = "drones",
-  uniqueConstraints = { @UniqueConstraint(columnNames = { "serialNumber" }) }
-)
+@Table(name = "drones", uniqueConstraints = { @UniqueConstraint(columnNames = { "serialNumber" }) })
 public class Drone extends UserDateAudit {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-  @NotBlank
-  @Size(max = 100)
-  private String serialNumber;
+	@NotBlank
+	@Size(max = 100)
+	private String serialNumber;
 
-  private DroneModel model;
+	private DroneModel model;
 
-  @Max(value = 500) //Quotion on max 500gr
-  private Integer weightLimit;
+	@Max(value = 500) // Quotion on max 500gr
+	private Integer weightLimit;
 
-  @Max(value = 100)
-  private Integer batteryCapacity;
+	@Max(value = 100)
+	private Integer batteryCapacity;
 
-  private DroneState state;
+	private DroneState state;
 
-  public Drone() {}
+	@OneToMany(mappedBy = "drone", fetch = FetchType.LAZY)
+	private Set<DroneMedicationLoad> droneDeliveries;
 
-  public Drone(
-    @NotBlank @Size(max = 100) String serialNumber,
-    DroneModel model,
-    @Max(500) Integer weightLimit,
-    @Max(100) Integer batteryCapacity,
-    DroneState state
-  ) {
-    this.serialNumber = serialNumber;
-    this.model = model;
-    this.weightLimit = weightLimit;
-    this.batteryCapacity = batteryCapacity;
-    this.state = state;
-  }
+	public Drone() {
+	}
 
-  public Long getId() {
-    return id;
-  }
+	public Drone(@NotBlank @Size(max = 100) String serialNumber, DroneModel model, @Max(500) Integer weightLimit,
+			@Max(100) Integer batteryCapacity, DroneState state) {
+		this.serialNumber = serialNumber;
+		this.model = model;
+		this.weightLimit = weightLimit;
+		this.batteryCapacity = batteryCapacity;
+		this.state = state;
+	}
 
-  public void setId(Long id) {
-    this.id = id;
-  }
+	public Long getId() {
+		return id;
+	}
 
-  public String getSerialNumber() {
-    return serialNumber;
-  }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-  public void setSerialNumber(String serialNumber) {
-    this.serialNumber = serialNumber;
-  }
+	public String getSerialNumber() {
+		return serialNumber;
+	}
 
-  public DroneModel getModel() {
-    return model;
-  }
+	public void setSerialNumber(String serialNumber) {
+		this.serialNumber = serialNumber;
+	}
 
-  public void setModel(DroneModel model) {
-    this.model = model;
-  }
+	public DroneModel getModel() {
+		return model;
+	}
 
-  public Integer getWeightLimit() {
-    return weightLimit;
-  }
+	public void setModel(DroneModel model) {
+		this.model = model;
+	}
 
-  public void setWeightLimit(Integer weightLimit) {
-    this.weightLimit = weightLimit;
-  }
+	public Integer getWeightLimit() {
+		return weightLimit;
+	}
 
-  public Integer getBatteryCapacity() {
-    return batteryCapacity;
-  }
+	public void setWeightLimit(Integer weightLimit) {
+		this.weightLimit = weightLimit;
+	}
 
-  public void setBatteryCapacity(Integer batteryCapacity) {
-    this.batteryCapacity = batteryCapacity;
-  }
+	public Integer getBatteryCapacity() {
+		return batteryCapacity;
+	}
 
-  public DroneState getState() {
-    return state;
-  }
+	public void setBatteryCapacity(Integer batteryCapacity) {
+		this.batteryCapacity = batteryCapacity;
+	}
 
-  public void setState(DroneState state) {
-    this.state = state;
-  }
+	public DroneState getState() {
+		return state;
+	}
+
+	public void setState(DroneState state) {
+		this.state = state;
+	}
+
+	public Set<DroneMedicationLoad> getDroneDeliveries() {
+		return droneDeliveries;
+	}
+
+	public void setDroneDeliveries(Set<DroneMedicationLoad> droneDeliveries) {
+		this.droneDeliveries = droneDeliveries;
+	}
+	
 }

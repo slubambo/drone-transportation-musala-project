@@ -59,7 +59,7 @@ public class DispatchService {
 				HttpStatus.EXPECTATION_FAILED);
 	}
 
-	/* Get Drone Battery Status */
+	/* check drone battery level for a given drone */
 	public BattteryStatusResponse getDroneBatteryPercentage(DroneResponsePayload payLoad) {
 
 		Optional<Drone> drone = payLoad.getId() != null ? droneRepository.findById(payLoad.getId()) : Optional.empty();
