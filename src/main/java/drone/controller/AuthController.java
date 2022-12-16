@@ -1,13 +1,13 @@
 package drone.controller;
 
-import drone.Payloads.ApiResponse;
-import drone.Payloads.JwtAuthenticationResponse;
-import drone.Payloads.LoginRequest;
-import drone.Payloads.SignUpRequest;
 import drone.enums.RoleName;
 import drone.exception.AppException;
 import drone.model.General.Role;
 import drone.model.General.User;
+import drone.payloads.ApiResponse;
+import drone.payloads.JwtAuthenticationResponse;
+import drone.payloads.LoginRequest;
+import drone.payloads.SignUpRequest;
 import drone.repository.General.RoleRepository;
 import drone.repository.General.UserRepository;
 import drone.security.JwtTokenProvider;

@@ -1,4 +1,4 @@
-package drone.Payloads;
+package drone.payloads;
 
 public class ApiResponse {
 
