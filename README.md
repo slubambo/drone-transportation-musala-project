@@ -16,7 +16,8 @@ Useful drone functions include delivery of small items that are (urgently) neede
 
 ### Set-up
 
-> Feel free to make assumptions for the design approach.
+Create mysql database and give a name according to the properties file connection details
+
 
 ---
 
