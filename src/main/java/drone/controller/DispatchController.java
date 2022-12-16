@@ -6,6 +6,7 @@ import drone.payloads.ApiResponse;
 import drone.payloads.drones.BattteryStatusResponse;
 import drone.payloads.drones.DroneRequestPayload;
 import drone.payloads.drones.DroneResponsePayload;
+import drone.payloads.medications.MedicationResponsePayload;
 import drone.security.CurrentUser;
 import drone.security.UserPrincipal;
 import drone.services.DispatchService;
@@ -65,5 +66,16 @@ public class DispatchController {
 	@GetMapping("/get-available-drones")
 	public List<DroneResponsePayload> getAvailableDrones() {
 		return dispatchService.getAvailableDrones();
+	}
+
+	/*
+	 *
+	 * Dispatching Medications
+	 */
+
+	/* get medications for loading */
+	@GetMapping("/get-medications")
+	public List<MedicationResponsePayload> getMedications() {
+		return dispatchService.getMedications();
 	}
 }

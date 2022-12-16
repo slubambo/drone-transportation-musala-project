@@ -2,11 +2,14 @@ package drone.services;
 
 import drone.enums.DroneState;
 import drone.model.businessModels.Drone;
+import drone.model.businessModels.Medication;
 import drone.payloads.ApiResponse;
 import drone.payloads.drones.BattteryStatusResponse;
 import drone.payloads.drones.DroneRequestPayload;
 import drone.payloads.drones.DroneResponsePayload;
+import drone.payloads.medications.MedicationResponsePayload;
 import drone.repository.BusinessRepositories.DroneRepository;
+import drone.repository.BusinessRepositories.MedicationRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +29,9 @@ public class DispatchService {
 
 	@Autowired
 	private DroneRepository droneRepository;
+
+	@Autowired
+	private MedicationRepository medicationRepository;
 
 	/*
 	 *
@@ -95,6 +101,25 @@ public class DispatchService {
 				d.getModel(), d.getWeightLimit(), d.getBatteryCapacity(), d.getState())).collect(Collectors.toList());
 
 		return availableDrones;
+
+	}
+
+	/*
+	 *
+	 * Dispatching Medications
+	 */
+	/* checking available drones for loading */
+	public List<MedicationResponsePayload> getMedications() {
+
+		List<MedicationResponsePayload> medications = new ArrayList<>();
+
+		List<Medication> medicationlist = medicationRepository.findAll();
+
+		// transform to drone response pay-load list
+		medications = medicationlist.stream().map(m -> new MedicationResponsePayload(m.getId(), m.getName(),
+				m.getWeight(), m.getCode(), m.getImagePath())).collect(Collectors.toList());
+
+		return medications;
 
 	}
 }

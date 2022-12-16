@@ -29,18 +29,12 @@ public class Medication extends UserDateAudit {
 	@Column(length = 2000)
 	private byte[] image;
 
+	private String imagePath;
+
 	@OneToMany(mappedBy = "medication", fetch = FetchType.LAZY)
 	private Set<DroneMedicationDelivery> medicationDeliveries;
 
 	public Medication() {
-	}
-
-	public Medication(@NotBlank @Pattern(regexp = "^[A-Za-z0-9]+$") String name, Long weight,
-			@NotBlank @Pattern(regexp = "^[A-Za-z0-9]+$") String code, byte[] image) {
-		this.name = name;
-		this.weight = weight;
-		this.code = code;
-		this.image = image;
 	}
 
 	public Long getId() {
@@ -90,5 +84,13 @@ public class Medication extends UserDateAudit {
 	public void setMedicationDeliveries(Set<DroneMedicationDelivery> medicationDeliveries) {
 		this.medicationDeliveries = medicationDeliveries;
 	}
-	
+
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+
 }
