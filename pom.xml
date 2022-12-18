@@ -82,10 +82,7 @@
 			<type>pom</type>
 		</dependency>
 
-		<dependency>
-			<groupId>org.hsqldb</groupId>
-			<artifactId>hsqldb</artifactId>
-		</dependency>
+		
 
 
 	</dependencies>
