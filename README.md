@@ -16,9 +16,27 @@ Useful drone functions include delivery of small items that are (urgently) neede
 
 ### Set-up
 
-Create mysql database and give a name according to the properties file connection details
+1. Load application in eclipse or Visual Studio Code for running in development mode (It is maven existing project)
 
-Run the application in any supporting IDE such as eclipse and Visual Studio Code
+2. Run application after it loads/installs necessary libraries
+
+3. Since the application requires authentication, run the API for signing up user via the API documentation in the next section below.
+
+4. Sign in with the same credentials via the Sign in end point (details via API Documentation below)
+
+5. Register a drone
+
+6. Register Medication
+
+7. Load Drone with Medication
+
+8. Check loaded medication items for a given drone
+
+9. Check available drones for loading
+
+10. Check drone battery level for a given drone
+
+**Note: The API end points are details in the API documentation section below**
 
 ---
 
