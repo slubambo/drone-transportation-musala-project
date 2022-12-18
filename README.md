@@ -42,7 +42,7 @@ Useful drone functions include delivery of small items that are (urgently) neede
 
 ### API Documentation
 
-1. **Creating Account**:
+**1. Creating Account**:
 
 POST: localhost:5000/api/auth/signup
 
@@ -55,7 +55,7 @@ example:
 "password": "Alpharest@01"
 }
 
-2. **Signing in**:
+**2. Signing in**:
 
 POST: localhost:5000/api/auth/sign-in
 
@@ -66,7 +66,7 @@ example:
 "password": "Alpharest@01"
 }
 
-3. **Registering a Drone**:
+**3. Registering a Drone**:
 
 POST: localhost:5000/api/dispatch/register-drone
 
@@ -80,11 +80,24 @@ example:
 "state": "IDLE"
 }
 
-4. **Checking available drones for loading**:
+**4. Registering a Medication**:
+
+POST: localhost:5000/api/dispatch/register-medication
+
+example:
+
+{
+"name": "Panadol",
+"weight": 100,
+"code": "A",
+"imagePath": "/images/panadol.img"
+}
+
+**5. Checking available drones for loading**:
 
 GET: localhost:5000/api/dispatch/get-available-drones
 
-5. **check drone battery level for a given drone**:
+**6. check drone battery level for a given drone**:
 
 GET: localhost:5000/api/dispatch/get-drone-battery-perecentage
 
@@ -94,7 +107,7 @@ example:
 "id": 1
 }
 
-6. **loading a drone with medication items**:
+**7. loading a drone with medication items**:
 
 GET: localhost:5000/api/dispatch/load-drone-with-medication
 
@@ -107,7 +120,7 @@ example:
 "loadStatus": "LOADING"
 }
 
-7. **checking loaded medication items for a given drone**:
+**8. checking loaded medication items for a given drone**:
 
 GET: localhost:5000/api/dispatch/check-drone-medication-load
 
@@ -116,5 +129,15 @@ example:
 {
 "id": 1
 }
+
+### Architecture
+
+The program is developed using Spring Boot java framework.
+An in-memory database of hsqldb is used.
+
+### Assumptions
+
+The application's functional components are accessed by authenticated users
+The image property of Medication is set to an image path of an image saved in public directory. This is due to its advantages compare to saving the Image bytes in the database
 
 :scroll: **END**
