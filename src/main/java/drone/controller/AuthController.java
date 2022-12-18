@@ -11,6 +11,7 @@ import drone.payloads.SignUpRequest;
 import drone.repository.general.RoleRepository;
 import drone.repository.general.UserRepository;
 import drone.security.JwtTokenProvider;
+import drone.services.GeneralService;
 import jakarta.validation.Valid;
 import java.net.URI;
 import java.util.Collections;
@@ -73,6 +74,17 @@ public class AuthController {
 				signUpRequest.getPassword());
 
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+		// INSERT ROLES if not in db
+		if (!roleRepository.findByName(RoleName.ROLE_USER).isPresent()) {
+			System.out.println("Role User not Present");
+
+			Role role = new Role();
+
+			role.setName(RoleName.ROLE_USER);
+
+			roleRepository.save(role);
+		}
 
 		Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
 				.orElseThrow(() -> new AppException("User Role not set."));

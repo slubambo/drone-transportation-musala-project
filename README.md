@@ -18,6 +18,7 @@ Useful drone functions include delivery of small items that are (urgently) neede
 
 Create mysql database and give a name according to the properties file connection details
 
+Run the application in any supporting IDE such as eclipse and Visual Studio Code
 
 ---
 
